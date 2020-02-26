@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetRandomHandSprite();
-        Text_Point.text = "POINT：" + Point + "/10";
+        Text_Point.text = "POINT:" + Point + "/10";
         Button_Gu.onClick.AsObservable().Subscribe((_) => OnClickedHand(Sprite_Pa));
         Button_Tyoki.onClick.AsObservable().Subscribe((_) => OnClickedHand(Sprite_Gu));
         Button_Pa.onClick.AsObservable().Subscribe((_) => OnClickedHand(Sprite_Tyoki));
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         Audio_Correct.Play();
         Point++;
-        Text_Point.text = "POINT：" + Point + "/10";
+        Text_Point.text = "POINT:" + Point + "/10";
         
         if (Point == 10)
         {
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
         Audio_InCorrect.Play();
         Point--;
-        Text_Point.text = "POINT" + Point + "/10";
+        Text_Point.text = "POINT:" + Point + "/10";
 
     }
 
