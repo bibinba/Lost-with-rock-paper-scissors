@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,28 +25,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Canvas_End;
 
     private int Point = 0;
+    private int prevint = 0;
     void Start()
     {
         SetRandomHandSprite();
-        Text_Point.text = "POINT" + Point + "/10";
+        Text_Point.text = "POINT：" + Point + "/10";
         Button_Gu.onClick.AsObservable().Subscribe((_) => OnClickedHand(Sprite_Pa));
         Button_Tyoki.onClick.AsObservable().Subscribe((_) => OnClickedHand(Sprite_Gu));
         Button_Pa.onClick.AsObservable().Subscribe((_) => OnClickedHand(Sprite_Tyoki));
     }
 
-    void OnClickedGu()
-    {
-        
-        if(Image_Hand.sprite == Sprite_Pa)
-        {
-            Correct();
-        }
-        else
-        {
-            InCorrect();
-        }
-        SetRandomHandSprite();
-    }
 
     void OnClickedHand(Sprite sprite_lose)
     {
@@ -67,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         Audio_Correct.Play();
         Point++;
-        Text_Point.text = "POINT" + Point + "/10";
+        Text_Point.text = "POINT：" + Point + "/10";
         
         if (Point == 10)
         {
@@ -87,6 +76,12 @@ public class GameManager : MonoBehaviour
     void SetRandomHandSprite()
     {
         int randint = Random.Range(1, 4);
+        
+        while (randint== prevint)
+        {
+            randint = Random.Range(1, 4);
+        }
+        prevint = randint;
 
         if (randint == 1)
         {            
@@ -100,5 +95,11 @@ public class GameManager : MonoBehaviour
         {
             Image_Hand.sprite = Sprite_Pa;
         }
+    }
+
+    public void ReStart()
+    {
+       
+        SceneManager.LoadScene("Game");
     }
 }
